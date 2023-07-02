@@ -23,3 +23,10 @@ rm /tmp/adblock-unbound
 
 # cat /tmp/blocklist-unbound > /var/unbound/etc/unbound.block.conf
 # rm /tmp/blocklist-unbound
+
+# whitelist some important sites
+echo "Whitelisting some sites..."
+cat $HOME/whitelist.txt | grep '^0\.0\.0\.0' | awk '{print "local-zone: \""$2"\" always_transparent\n"}' > /tmp/whitelist-unbound
+
+cat /tmp/whitelist-unbound > /var/unbound/etc/unbound.whitelist.conf
+rm /tmp/whitelist-unbound
